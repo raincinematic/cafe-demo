@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Café Noir | Miami's Dark Roast Cinema</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --espresso:#16100A;
+  --roast:#221710;
+  --crema:#2E1F14;
+  --amber:#C98A3B;
+  --amber-glow:#E8B573;
+  --cream:#F2E7D5;
+  --cream-dim:rgba(242,231,213,.62);
+  --serif:'Cormorant Garamond',serif;
+  --sans:'Jost',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--espresso);
+  color:var(--cream);
+  font-family:var(--sans);
+  font-weight:300;
+  line-height:1.7;
+  overflow-x:hidden;
+}
+/* film grain over everything */
+body::after{
+  content:"";
+  position:fixed;inset:0;
+  pointer-events:none;z-index:50;
+  opacity:.055;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%}
+
+.eyebrow{
+  font-family:var(--sans);
+  font-size:.72rem;
+  letter-spacing:.42em;
+  text-transform:uppercase;
+  color:var(--amber);
+  font-weight:400;
+}
+h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.1}
+.section{padding:7rem 8vw;position:relative}
+.section-title{
+  font-size:clamp(2.4rem,4.5vw,3.8rem);
+  margin:.9rem 0 1.4rem;
+  letter-spacing:.02em;
+}
+.rule{
+  width:64px;height:1px;
+  background:linear-gradient(90deg,var(--amber),transparent);
+  margin:1.6rem 0 2.4rem;
+}
+
+/* ---------- NAV ---------- */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:40;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1.4rem 8vw;
+  background:linear-gradient(180deg,rgba(22,16,10,.92),rgba(22,16,10,0));
+}
+.logo{
+  font-family:var(--serif);
+  font-size:1.35rem;
+  letter-spacing:.32em;
+  text-transform:uppercase;
+}
+.logo span{color:var(--amber)}
+nav ul{display:flex;gap:2.6rem;list-style:none}
+nav ul a{
+  font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--cream-dim);
+  transition:color .3s;
+}
+nav ul a:hover,nav ul a:focus-visible{color:var(--amber-glow)}
+nav ul a:focus-visible{outline:1px solid var(--amber);outline-offset:4px}
+
+/* ---------- HERO ---------- */
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  text-align:center;
+  position:relative;
+  padding:9rem 6vw 6rem;
+}
+/* letterbox bars */
+.hero::before,.hero::after{
+  content:"";position:absolute;left:0;right:0;height:52px;
+  background:#0B0704;z-index:2;
+}
+.hero::before{top:0}
+.hero::after{bottom:0}
+.hero-glow{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 55% at 50% 62%,rgba(201,138,59,.20),transparent 70%);
+  animation:breathe 9s ease-in-out infinite;
+}
+@keyframes breathe{
+  0%,100%{opacity:.7;transform:scale(1)}
+  50%{opacity:1;transform:scale(1.05)}
+}
+.hero-kicker{
+  font-size:.72rem;letter-spacing:.55em;text-transform:uppercase;
+  color:var(--cream-dim);
+  margin-bottom:1.6rem;
+  position:relative;z-index:3;
+}
+.hero h1{
+  font-size:clamp(3.4rem,10vw,8.5rem);
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  position:relative;z-index:3;
+  text-shadow:0 0 60px rgba(201,138,59,.25);
+}
+.hero h1 .noir{color:var(--amber-glow)}
+.hero-tag{
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:clamp(1.1rem,2vw,1.5rem);
+  color:var(--cream-dim);
+  margin-top:1.2rem;
+  position:relative;z-index:3;
+}
+/* video placeholder framed like a film still */
+.hero-video{
+  margin-top:3.4rem;
+  width:min(860px,88vw);
+  aspect-ratio:16/9;
+  position:relative;z-index:3;
+  border:1px solid rgba(201,138,59,.35);
+  background:
+    linear-gradient(160deg,rgba(46,31,20,.9),rgba(22,16,10,.95)),
+    radial-gradient(circle at 30% 70%,rgba(201,138,59,.25),transparent 60%);
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:center;gap:1rem;
+  cursor:pointer;
+  transition:border-color .4s,box-shadow .4s;
+}
+.hero-video:hover,.hero-video:focus-visible{
+  border-color:var(--amber);
+  box-shadow:0 0 80px rgba(201,138,59,.18);
+  outline:none;
+}
+.hero-video video{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  object-fit:cover;
+}
+.play-ring{
+  width:78px;height:78px;border-radius:50%;
+  border:1px solid var(--amber);
+  display:flex;justify-content:center;align-items:center;
+  transition:transform .4s;
+}
+.hero-video:hover .play-ring{transform:scale(1.08)}
+.play-ring svg{margin-left:5px}
+.hero-video p{
+  font-size:.7rem;letter-spacing:.35em;text-transform:uppercase;
+  color:var(--cream-dim);
+}
+.scroll-cue{
+  position:absolute;bottom:74px;left:50%;transform:translateX(-50%);
+  font-size:.62rem;letter-spacing:.4em;text-transform:uppercase;
+  color:var(--cream-dim);z-index:3;
+  animation:drift 2.6s ease-in-out infinite;
+}
+@keyframes drift{
+  0%,100%{transform:translate(-50%,0);opacity:.5}
+  50%{transform:translate(-50%,8px);opacity:1}
+}
+
+/* ---------- ABOUT ---------- */
+.about{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:5rem;align-items:center;
+  background:linear-gradient(180deg,var(--espresso),var(--roast));
+}
+.about p{
+  color:var(--cream-dim);
+  font-size:1.05rem;
+  max-width:52ch;
+  margin-bottom:1.3rem;
+}
+.about p strong{color:var(--cream);font-weight:400}
+.about-frame{
+  aspect-ratio:3/4;
+  border:1px solid rgba(201,138,59,.3);
+  background:
+    linear-gradient(180deg,transparent 60%,rgba(22,16,10,.8)),
+    url('cafe1.jpg') center/cover no-repeat;
+  position:relative;
+  display:flex;align-items:flex-end;
+}
+.about-frame::before{
+  content:"";position:absolute;inset:14px;
+  border:1px solid rgba(242,231,213,.12);
+}
+.about-frame figcaption{
+  padding:1.6rem;
+  font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--cream-dim);
+}
+
+/* ---------- MENU ---------- */
+.menu{background:var(--roast);text-align:center}
+.menu-head{max-width:640px;margin:0 auto 4rem}
+.menu-head .rule{margin:1.6rem auto 0}
+.menu-list{max-width:720px;margin:0 auto}
+.menu-item{
+  display:flex;align-items:baseline;gap:1.2rem;
+  padding:1.7rem 0;
+  border-bottom:1px solid rgba(242,231,213,.08);
+  text-align:left;
+}
+.menu-item:first-child{border-top:1px solid rgba(242,231,213,.08)}
+.menu-item h3{
+  font-size:1.55rem;
+  letter-spacing:.04em;
+  white-space:nowrap;
+}
+.menu-dots{
+  flex:1;
+  border-bottom:1px dotted rgba(201,138,59,.4);
+  transform:translateY(-6px);
+}
+.menu-price{
+  font-family:var(--serif);
+  font-size:1.3rem;
+  color:var(--amber-glow);
+}
+.menu-item p{
+  flex-basis:100%;
+  font-size:.92rem;color:var(--cream-dim);
+  margin-top:.35rem;
+}
+.menu-item{flex-wrap:wrap}
+.menu-note{
+  margin-top:3rem;
+  font-family:var(--serif);font-style:italic;
+  color:var(--cream-dim);font-size:1.05rem;
+}
+
+/* ---------- GALLERY ---------- */
+.gallery{background:var(--espresso)}
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  grid-auto-rows:260px;
+  gap:14px;
+  margin-top:3rem;
+}
+.shot{
+  position:relative;overflow:hidden;
+  border:1px solid rgba(201,138,59,.18);
+  display:flex;align-items:flex-end;
+  transition:border-color .4s;
+}
+.shot:hover{border-color:var(--amber)}
+.shot span{
+  padding:1.1rem 1.3rem;
+  font-size:.64rem;letter-spacing:.32em;text-transform:uppercase;
+  color:var(--cream-dim);
+  position:relative;z-index:2;
+}
+.shot::before{
+  content:"";position:absolute;inset:0;
+  transition:transform 6s ease;
+}
+.shot:hover::before{transform:scale(1.06)}
+.shot.tall{grid-row:span 2}
+.shot.wide{grid-column:span 2}
+.s1::before{background:linear-gradient(180deg,transparent 55%,rgba(22,16,10,.75)),url('cafe1.jpg') center/cover no-repeat}
+.s2::before{background:linear-gradient(180deg,transparent 55%,rgba(22,16,10,.75)),url('cafe2.jpg') center/cover no-repeat}
+.s3::before{background:linear-gradient(180deg,transparent 55%,rgba(22,16,10,.75)),url('cafe3.jpg') center/cover no-repeat}
+.s4::before{background:linear-gradient(180deg,transparent 55%,rgba(22,16,10,.75)),url('cafe4.jpg') center/cover no-repeat}
+.s5::before{background:linear-gradient(180deg,transparent 55%,rgba(22,16,10,.75)),url('cafe3.jpg') center/cover no-repeat}
+
+/* ---------- CONTACT ---------- */
+.contact{
+  background:linear-gradient(180deg,var(--roast),#0E0905);
+  display:grid;grid-template-columns:1fr 1fr;gap:5rem;
+}
+.contact-info p{color:var(--cream-dim);margin-bottom:2.2rem;max-width:44ch}
+.detail{margin-bottom:1.8rem}
+.detail .eyebrow{display:block;margin-bottom:.4rem;letter-spacing:.3em}
+.detail p{margin:0;color:var(--cream);font-size:1.02rem}
+.booking{
+  border:1px solid rgba(201,138,59,.3);
+  padding:2.8rem;
+  background:rgba(22,16,10,.6);
+}
+.booking h3{font-size:1.7rem;margin-bottom:1.8rem;letter-spacing:.03em}
+.field{margin-bottom:1.4rem}
+.field label{
+  display:block;
+  font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--cream-dim);
+  margin-bottom:.5rem;
+}
+.field input,.field select{
+  width:100%;
+  background:transparent;
+  border:none;
+  border-bottom:1px solid rgba(242,231,213,.25);
+  color:var(--cream);
+  font-family:var(--sans);
+  font-size:1rem;
+  padding:.55rem 0;
+  transition:border-color .3s;
+}
+.field input:focus,.field select:focus{
+  outline:none;border-bottom-color:var(--amber);
+}
+.field select{appearance:none;cursor:pointer}
+.field option{background:var(--roast)}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem}
+.btn{
+  display:inline-block;
+  margin-top:1.4rem;
+  padding:1rem 3rem;
+  border:1px solid var(--amber);
+  background:transparent;
+  color:var(--amber-glow);
+  font-family:var(--sans);
+  font-size:.72rem;letter-spacing:.35em;text-transform:uppercase;
+  cursor:pointer;
+  transition:background .4s,color .4s,box-shadow .4s;
+}
+.btn:hover,.btn:focus-visible{
+  background:var(--amber);
+  color:var(--espresso);
+  box-shadow:0 0 40px rgba(201,138,59,.35);
+  outline:none;
+}
+
+/* ---------- FOOTER ---------- */
+footer{
+  padding:3rem 8vw;
+  background:#0B0704;
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:.68rem;letter-spacing:.28em;text-transform:uppercase;
+  color:rgba(242,231,213,.4);
+}
+
+/* reveal on scroll */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .9s ease,transform .9s ease}
+.reveal.in{opacity:1;transform:none}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+  html{scroll-behavior:auto}
+}
+@media (max-width:900px){
+  .section{padding:5rem 6vw}
+  nav ul{display:none}
+  .about,.contact{grid-template-columns:1fr;gap:3rem}
+  .gallery-grid{grid-template-columns:1fr 1fr;grid-auto-rows:220px}
+  .shot.wide{grid-column:span 2}
+  .field-row{grid-template-columns:1fr}
+  .hero::before,.hero::after{height:34px}
+}
+@media (max-width:560px){
+  .gallery-grid{grid-template-columns:1fr}
+  .shot.wide,.shot.tall{grid-column:auto;grid-row:auto}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="#top">Café <span>Noir</span></a>
+  <ul>
+    <li><a href="#about">The Story</a></li>
+    <li><a href="#menu">The Menu</a></li>
+    <li><a href="#gallery">The Room</a></li>
+    <li><a href="#book">Reserve</a></li>
+  </ul>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero-glow"></div>
+  <p class="hero-kicker">Miami Presents</p>
+  <h1>Café <span class="noir">Noir</span></h1>
+  <p class="hero-tag">Where every cup opens like a film.</p>
+  <div class="hero-video" aria-label="Café Noir story film">
+    <video src="cafe-hero.mp4" autoplay muted loop playsinline></video>
+  </div>
+  <p class="scroll-cue">Scroll</p>
+</header>
+
+<section class="section about reveal" id="about">
+  <div>
+    <p class="eyebrow">The Story</p>
+    <h2 class="section-title">Espresso, After Dark</h2>
+    <div class="rule"></div>
+    <p><strong>Café Noir began with one question:</strong> what if a coffee shop felt like the opening scene of a film? Low light. Warm amber. A room that slows you down the moment you walk in.</p>
+    <p>Our beans are roasted dark and slow in small batches. Our espresso pulls rich and heavy, crowned with crema the color of old gold. No noise, no rush, no fluorescent anything.</p>
+    <p>This is Miami's quiet side. Come find it.</p>
+  </div>
+  <figure class="about-frame">
+    <figcaption>Scene 01 · The Roast</figcaption>
+  </figure>
+</section>
+
+<section class="section menu reveal" id="menu">
+  <div class="menu-head">
+    <p class="eyebrow">The Menu</p>
+    <h2 class="section-title">Featured Pours</h2>
+    <div class="rule"></div>
+  </div>
+  <div class="menu-list">
+    <div class="menu-item">
+      <h3>The Noir</h3>
+      <div class="menu-dots"></div>
+      <span class="menu-price">7</span>
+      <p>Double ristretto over a single cube of demerara. Dark, dense, unapologetic.</p>
+    </div>
+    <div class="menu-item">
+      <h3>Amber Hour</h3>
+      <div class="menu-dots"></div>
+      <span class="menu-price">9</span>
+      <p>Espresso, burnt honey, and steamed cream. Our golden hour in a glass.</p>
+    </div>
+    <div class="menu-item">
+      <h3>Velvet Cortadito</h3>
+      <div class="menu-dots"></div>
+      <span class="menu-price">6</span>
+      <p>A Miami classic, slowed down. Sweetened espresso folded into silk-steamed milk.</p>
+    </div>
+    <div class="menu-item">
+      <h3>Cold Open</h3>
+      <div class="menu-dots"></div>
+      <span class="menu-price">8</span>
+      <p>Twelve-hour cold brew over a hand-cut clear cube, finished with orange oil.</p>
+    </div>
+    <div class="menu-item">
+      <h3>The Final Cut</h3>
+      <div class="menu-dots"></div>
+      <span class="menu-price">12</span>
+      <p>Affogato with dark roast espresso, vanilla bean gelato, and shaved cacao. Dessert, credits rolling.</p>
+    </div>
+  </div>
+  <p class="menu-note">Every drink is pulled to order. Good scenes take time.</p>
+</section>
+
+<section class="section gallery reveal" id="gallery">
+  <p class="eyebrow">The Room</p>
+  <h2 class="section-title">Atmosphere</h2>
+  <div class="rule"></div>
+  <div class="gallery-grid">
+    <div class="shot tall s1"><span>The Bar, 7 PM</span></div>
+    <div class="shot s2"><span>Crema Detail</span></div>
+    <div class="shot s3"><span>Corner Booth</span></div>
+    <div class="shot wide s4"><span>Golden Hour Through the Blinds</span></div>
+    <div class="shot s5"><span>The Last Pour</span></div>
+  </div>
+</section>
+
+<section class="section contact reveal" id="book">
+  <div class="contact-info">
+    <p class="eyebrow">Visit</p>
+    <h2 class="section-title">Reserve Your Scene</h2>
+    <div class="rule"></div>
+    <p>Walk-ins welcome at the bar. Booths and private tastings by reservation. Evenings fill fast, especially Fridays.</p>
+    <div class="detail">
+      <span class="eyebrow">Location</span>
+      <p>481 Meridian Lane, Miami Beach, FL</p>
+    </div>
+    <div class="detail">
+      <span class="eyebrow">Hours</span>
+      <p>Daily · 7 AM to Midnight</p>
+    </div>
+    <div class="detail">
+      <span class="eyebrow">Contact</span>
+      <p>hello@cafenoir.miami · (305) 555-0147</p>
+    </div>
+  </div>
+  <div class="booking">
+    <h3>Book a Table</h3>
+    <div class="field">
+      <label for="name">Name</label>
+      <input id="name" type="text" placeholder="Your name" autocomplete="name">
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label for="date">Date</label>
+        <input id="date" type="date">
+      </div>
+      <div class="field">
+        <label for="time">Time</label>
+        <input id="time" type="time">
+      </div>
+    </div>
+    <div class="field">
+      <label for="party">Party Size</label>
+      <select id="party">
+        <option>Two</option>
+        <option>Three</option>
+        <option>Four</option>
+        <option>Five or more</option>
+      </select>
+    </div>
+    <button class="btn" type="button" onclick="this.textContent='Request Sent'">Request Reservation</button>
+  </div>
+</section>
+
+<footer>
+  <span>Café Noir · Miami Beach</span>
+  <span>Open Daily Until Midnight</span>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>
